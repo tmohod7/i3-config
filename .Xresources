@@ -1,0 +1,9 @@
+URxvt*font: xft:Roboto Mono:bold:size=11
+URxvt.cursorColor: white
+URxvt*foreground:   #bbc5ff
+URxvt*background:   [100]#292d3e
+URxvt*cursorColor:  #bbc5ff
+URxvt.letterSpace: 0
+URxvt.scrollBar: false
+URxvt.transparent: true
+URxvt.shading: 10
