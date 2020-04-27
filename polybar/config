@@ -18,6 +18,9 @@ foreground-alt = #eee
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
+;color_1 = #014573
+color_1 = #246b05
+color_2 = #528a1e
 
 ;===============================================================================
 ; This is the actual bar
@@ -35,8 +38,8 @@ fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
-line-color = #f00
+line-size = 2
+line-color = #123947
 
 border-size = 2
 ;border-color = #00000000
@@ -51,19 +54,17 @@ font-0 = "Roboto:size=9:weight=bold;2"
 font-1 = "Roboto:size=9:weight=bold;2"
 font-2 = "Font Awesome 5 Free:size=9:weight=bold;2"
 ;font-3 = "Font Awesome 5 Free:size=27:weight=bold;7"
-font-3 = "Font Awesome 5 Free:style=Solid:size=30;6"
-
+;font-3 = "Font Awesome 5 Free:style=Solid:size=30;6"
+font-3 = "Font Awesome 5 Free:style=Solid:size=29;7"
 
 modules-left = i3 xwindow
 modules-center = 
-modules-right = outer_arrow pacman-updates arrow2 filesystem arrow1 xbacklight arrow2 pulseaudio arrow1 memory arrow2 cpu arrow1 wlan arrow2 eth arrow1 temperature arrow2 battery arrow1 date arrow3 powermenu
+modules-right = filesystem memory wlan eth xbacklight pulseaudio battery date time
 
 seperator = 
 tray-position = right
 tray-padding = 1
 ;tray-background = #0063ff
-
-
 
 ;wm-restack = bspwm
 ;wm-restack = i3
@@ -128,8 +129,8 @@ label-mounted =   %used% of %total%
 ;label-unmounted = %mountpoint% not mounted
 ;label-unmounted-foreground = ${colors.foreground-alt}
 ;format-underline = #f90000
-format-mounted-background = #428DAD
-format-mounted-padding = 1
+format-mounted-background = ${colors.color_1}
+format-mounted-padding = 3
 
 ;===============================================================================
 ; Arrows
@@ -139,29 +140,29 @@ format-mounted-padding = 1
 type = custom/text
 content = "%{T4}%{T-}"
 ;content-font = 3
-content-foreground = #A77AC4
-content-background = #428DAD
+content-foreground = #246b05
+content-background = ${colors.color_2}
 
 [module/arrow2]
 type = custom/text
 content = "%{T4}%{T-}"
 ;content-font = 3
-content-foreground = #428DAD
-content-background = #A77AC4
+content-foreground = ${colors.color_2}
+content-background = ${colors.color_1}
 
-[module/arrow3]
+[module/last_arrow]
 type = custom/text
 content = "%{T4}%{T-}"
 ;content-font = 3
-content-foreground = #6b625a
-content-background = #A77AC4
+content-foreground = ${colors.background}
+content-background = ${colors.color_1}
 
 [module/outer_arrow]
 type = custom/text
 content = "%{T4}%{T-}"
 ;content-font = 3
 content-foreground = #A77AC4
-;content-background = #A77AC4
+content-background = ${colors.background}
 
 ;===============================================================================
 ; For bspwm -- not using this
@@ -272,8 +273,8 @@ bar-empty =
 bar-empty-font = 2
 bar-empty-foreground = ${colors.foreground-alt}
 
-format-background = #A77AC4
-format-padding = 1
+format-background = ${colors.color_1}
+format-padding = 3
 
 ;ramp-0 = 🌕
 ;ramp-1 = 🌔
@@ -319,8 +320,8 @@ bar-used-fill = ▐
 bar-used-empty = ▐
 bar-used-empty-foreground = #444444
 
-format-background = #A77AC4
-format-padding = 1
+format-background = ${colors.color_2}
+format-padding = 3
 
 ; Only applies if <ramp-used> is used
 ;ramp-used-0 = ▁
@@ -342,22 +343,6 @@ format-padding = 1
 ;ramp-free-6 = ▇
 ;ramp-free-7 = █
 
-;===============================================================================
-; PacMan updates
-;===============================================================================
-
-[module/pacman-updates]
-type = custom/script
-;exec = pacman -Qu | wc -l
-exec = checkupdates | wc -l
-interval = 1000
-label =   %output%
-format-foreground = #ffffff
-format-background = #A77AC4
-format-padding = 1
-;format-prefix = " "
-;format-prefix-foreground = #FFBB00
-;format-underline = #FFBB00
 
 ;===============================================================================
 ; Wireless LAN / WiFi
@@ -378,10 +363,10 @@ label-disconnected-foreground = #66ffff
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-format-connected-background = #A77AC4
-format-disconnected-background = #A77AC4
-format-connected-padding = 1
-format-disconnected-padding = 1
+format-connected-background = ${colors.color_1}
+format-disconnected-background = ${colors.color_1}
+format-connected-padding = 2
+format-disconnected-padding = 3
 
 ramp-signal-0 = 
 ramp-signal-1 = 
@@ -410,31 +395,48 @@ format-disconnected =  No LAN
 ;label-disconnected = %ifname% disconnected
 label-disconnected-foreground = ${colors.foreground-alt}
 
-format-connected-background = #428DAD
-format-disconnected-background = #428DAD 
-format-connected-padding = 1
-format-disconnected-padding = 1
+format-connected-background = ${colors.color_2}
+format-disconnected-background = ${colors.color_2}
+format-connected-padding = 3
+format-disconnected-padding = 3
 
 ;===============================================================================
-; Date and Time
+; Date
 ;===============================================================================
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 60
 
 date = " %d %b %Y [ %a ]"
 
-time = %H:%M
-
-label =  %date%   %time%
+label =  %date%
 format = <label>
 format-prefix-foreground = ${colors.foreground-alt}
 ;format-underline = #0a6cf5
 ;label-foreground = #9A32DB
 format-foreground = #ffffff
-format-background = #A77AC4
-format-padding = 1
+format-background = ${colors.color_2}
+format-padding = 3
+
+;===============================================================================
+; Time
+;===============================================================================
+
+[module/time]
+type = internal/date
+interval = 60
+
+time = %H:%M
+
+label =  %time%
+format = <label>
+format-prefix-foreground = ${colors.foreground-alt}
+;format-underline = #0a6cf5
+;label-foreground = #9A32DB
+format-foreground = #ffffff
+format-background = #246b05
+format-padding = 3
 
 ;===============================================================================
 ; Pulse Audio
@@ -450,15 +452,17 @@ label-volume-foreground = ${root.foreground}
 use-ui-max = false
 
 label-muted = 
-label-muted-foreground = #ccc
+label-muted-foreground = #ffffff
 ;format-underline = #ff0000
 
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
 
-format-volume-background = #428DAD
-format-volume-padding = 1
+format-volume-background = ${colors.color_2}
+format-muted-background = ${colors.color_2}
+format-volume-padding = 3
+format-muted-padding = 3
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -562,10 +566,15 @@ label-charging =  %percentage%%
 format-discharging = <ramp-capacity> <label-discharging>
 ;format-discharging-underline = ${self.format-charging-underline}
 
-format-charging-background = #428DAD
-format-discharging-background = #428DAD
+format-charging-background = ${colors.color_1}
+format-discharging-background = ${colors.color_1}
+format-full-background = ${colors.color_1}
 
-format-full-prefix = " "
+format-charging-padding = 3
+format-discharging-padding = 3
+format-full-padding = 3
+
+format-full-prefix = " Full "
 format-full-prefix-foreground = ${colors.foreground-alt}
 ;format-full-underline = ${self.format-charging-underline}
 
