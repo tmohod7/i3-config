@@ -66,7 +66,12 @@ bindsym $mod+Shift+q kill
 bindsym $mod+Shift+x exec i3lock --image=/home/tushar/Wallpapers/Sherlock_lockscreen.png
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run -fn "Roboto Bold"
+#bindsym $mod+d exec dmenu_run -fn "Roboto Bold"
+
+# start my custom rofi
+bindsym $mod+d exec rofi -show run -lines 10 -eh 1 -width 50 -padding 50 -bw 0 -bc "#0000ff" -bg "#ff0000" -fg "#00ff00" -hlbg "#0000ff" -hlfg "#123663" -font "JetBrains Mono NL Bold 12"
+
+
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -135,6 +140,9 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+set $window1 "HOME"
+set $window2 "TERM"
+
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -158,6 +166,15 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+
+
+# start firefox browser
+bindsym $mod+Shift+b exec --no-startup-id firefox
+# start vlc media player
+bindsym $mod+Shift+v exec --no-startup-id vlc
+# start mousepad
+bindsym $mod+Shift+m exec --no-startup-id mousepad
+
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -191,19 +208,29 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
 bindsym $mod+r mode "resize"
 
 # ## Themes               border    background  text      indicator
-client.focused            #1f1b1b   #dedede     #201b5e   #d11736
-client.focused_inactive   #1f1b1b   #ededed     #93a1a1   #d11736
-client.unfocused          #002b36   #002b36     #586e75   #d11736
-client.urgent             #dc322f   #dc322f     #fdf6e3   #d11736
+client.focused            #21050a   #045dd9     #201b5e   #d11736
+client.focused_inactive   #21050a   #21050a     #93a1a1   #d11736
+client.unfocused          #21050a   #21050a     #586e75   #d11736
+client.urgent             #21050a   #21050a     #fdf6e3   #d11736
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	position top
-}
+#bar {
+#        status_command i3blocks -c ~/.config/i3/i3blocks.conf
+#		position bottom
+#}
 
-exec_always feh --bg-scale ~/Wallpapers/441294.jpg
+exec --no-startup-id nitrogen --restore
+
+
+# Disable window titlebars entirely
+for_window [class="^.*"] border pixel 3
+
+# Set inner/outer gaps
+gaps inner 7
+gaps outer 5
