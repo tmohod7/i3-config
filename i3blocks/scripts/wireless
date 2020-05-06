@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if [[ -z "$INTERFACE" ]] ; then
+    INTERFACE="${BLOCK_INSTANCE:-wlp2s0}"
+fi
+
+[[ ! -d /sys/class/net/${INTERFACE}/wireless ]] && exit
+
+if [[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'down' ]]
+then
+    echo "No WiFi"
+    exit
+fi
+
+QUALITY=$(grep $INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+
+ESSID=$(iwconfig wlp2s0 | grep 'ESSID:' | awk '{print $4}' | sed 's/ESSID://g' | sed 's/"//g')
+
+echo $ESSID [ $QUALITY% ]

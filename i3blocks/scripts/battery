@@ -1,0 +1,70 @@
+#!/bin/sh
+
+isDunstAliveFunc() {
+	retval=""
+	isDunstAlive=$(ps aux | pgrep -x dunst)
+	if [ -z $isDunstAlive ]
+	then
+		retval="false"
+	else
+		retval="true"
+	fi
+	echo "$retval"
+}
+
+getBatteryIcon() {
+	icon=""
+	if [ "$cap" -gt "80" ]
+	then
+		icon=""
+	elif [ "$cap" -gt "60" ]
+	then
+		icon=""
+	elif [ "$cap" -gt "40" ]
+	then
+		icon=""
+	elif [ "$cap" -gt "20" ]
+	then
+		icon=""
+	fi
+	echo "$icon"
+}
+
+curr_bat_stats=$(acpi)
+
+charge_stat=$(echo $curr_bat_stats | awk '{print $3}')
+charge_per=$(echo $curr_bat_stats | awk '{print $4}')
+
+val=$(echo $charge_per | awk -F',' '{print $1}')
+cap=$(echo $val  | cut -d'%' -f 1)
+icon=""
+
+if [ "$charge_stat" == "Charging," ]
+then
+	icon=""
+	flag=$( isDunstAliveFunc )
+	if [ "$flag" == "true" ]
+	then
+		killall dunst
+	fi
+elif [ "$charge_stat" == "Full," ]
+then
+	icon="Full"
+else
+	icon=""
+	flag=$( isDunstAliveFunc )
+	if [ "$cap" -lt 20 ]
+	then
+		notify-send "$(echo -e "Battery is less than 20%\nPlease connect to a charger!")" -u critical
+	fi
+#	if [ "$flag" == "false" ]
+#	then
+#		notify-send "$(echo -e "Battery is less than 20%\nPlease connect to a charger!")" -u critical
+#	else
+#		t=""
+#	fi
+fi
+
+battery_icon=$( getBatteryIcon )
+
+echo $battery_icon $icon $val

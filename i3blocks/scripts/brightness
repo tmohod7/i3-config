@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	1) setsid "$TERMINAL" -e xbacklight & ;;
+	4) xbacklight -inc 5 ;;
+	5) xbacklight -dec 5 ;;
+esac
+
+brightness_status=$(xbacklight -get | awk -F'.' '{print $1}')
+
+echo $brightness_status

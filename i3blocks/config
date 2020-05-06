@@ -1,0 +1,92 @@
+# i3blocks configuration file
+#
+# The i3blocks man page describes the usage of the binary,
+# and its website describes the configuration:
+#
+#     https://vivien.github.io/i3blocks
+
+
+# Global properties
+separator=false
+separator_block_width=10
+
+#[documentation]
+#full_text=Documentation
+#website=https://vivien.github.io/i3blocks
+#command=xdg-open "$website"
+#color=#f12711
+#align=center
+
+[music]
+command=ncmpcpp --current-song="{%a: %t}"
+interval=5
+separator_block_width=15
+separator=true
+color=#00ff00
+
+[disk]
+label= 
+command=df -h | awk '{if($6=="/") { print $3 " of " $2 }}'
+interval=300
+align=center
+color=#f12711
+#min_width=120
+padding=7
+
+[memory]
+label= 
+command=free -h | awk '{if($1=="Mem:") { print $3 " of " $2 }}'
+interval=10
+align=center
+color=#32a852
+
+[wifi]
+label= 
+command=~/.config/i3blocks/scripts/wireless
+#instance=wlp2s0
+interval=10
+align=center
+color=#1292a1
+
+[cpu]
+label= 
+command=mpstat -u | awk '{if($3=="all") { print 100-$13 "%" }}'
+interval=10
+align=center
+color=#c4bb35
+
+[backlight]
+# command=xbacklight -get | awk -F'.' '{print $1}'
+command=~/.config/i3blocks/scripts/brightness
+label= 
+interval=once
+signal=13
+align=center
+color=#35c4b3
+
+[battery]
+command=~/.config/i3blocks/scripts/battery
+align=center
+interval=1
+color=#e063bc
+
+[volume]
+interval=once
+command=~/.config/i3blocks/scripts/volume
+signal=10
+align=center
+color=#e08d63
+
+[date]
+label= 
+command=date '+%d %b %Y [ %a ]'
+interval=60
+align=center
+color=#a3989b
+
+[time]
+label= 
+command=date '+%H:%M'
+interval=60
+align=center
+color=#3ccf83
